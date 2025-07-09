@@ -34,8 +34,8 @@ def draw_ellipse(frame, bbox, color, track_id=None):
                 startAngle,
                 endAngle,
                 color,
-                thickness)
-                # lineType=cv2.LINE_4)
+                thickness,
+                lineType=cv2.LINE_4)
     
     rectangle_width =40
     rectangle_height = 20
