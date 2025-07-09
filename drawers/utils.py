@@ -60,7 +60,7 @@ def draw_ellipse(frame, bbox, color, track_id=None):
         cv2.putText(
             frame,
             str(track_id),
-            (int(x1_text), int(y2_rect+ 15)),
+            (int(x1_text), int(y2_rect-3)),
             cv2.FONT_HERSHEY_SIMPLEX,
             fontScale=0.6,
             color=(0,0,0),
