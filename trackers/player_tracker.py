@@ -5,10 +5,11 @@ sys.path.append("../") #add the parent directory to the path
 
 from utils import read_stub, save_stub
 
-'''A class that handles the player detection and tracking using YOLO and ByteTrack.
-This class uses the YOLO object detection with the ByteTrack tracking to maintain consistent
-player identities across frames while processing detection in batches.'''
+
 class PlayerTracker:
+    '''A class that handles the player detection and tracking using YOLO and ByteTrack.
+    This class uses the YOLO object detection with the ByteTrack tracking to maintain consistent
+    player identities across frames while processing detection in batches.'''
     def __init__(self,model_path):
         self.model=YOLO(model_path)
         self.tracker=sv.ByteTrack() #multi object tracking algorithm
@@ -21,7 +22,11 @@ class PlayerTracker:
             batch_detections=self.model.predict(batch_frames,conf=0.5) # conf=0.5, set the thresold for detection
             detections+=batch_detections
         return detections
-    """
+    
+    
+
+    def get_object_tracks(self,frames , read_from_stub = False, stub_path = None):
+        """
         Get player tracking results for a sequence of frames with optional caching.
 
         Args:
@@ -33,9 +38,6 @@ class PlayerTracker:
             list: List of dictionaries containing player tracking information for each frame,
                 where each dictionary maps player IDs to their bounding box coordinates.
         """
-    
-
-    def get_object_tracks(self,frames , read_from_stub = False, stub_path = None):
         
         tracks=read_stub(read_from_stub,stub_path)
         if tracks is not None:
@@ -46,7 +48,7 @@ class PlayerTracker:
         tracks=[]
 
         for frame_num,detection in enumerate(detections):
-            cls_names=detection.names
+            cls_names = detection.names
             cls_names_inv= {v:k for k,v in cls_names.items()}
 
             detections_supervision=sv.Detections.from_ultralytics(detection) # from ultralytics detection to supervision detection format
