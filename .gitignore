@@ -1,3 +1,7 @@
+models
+output_videos
+stubs
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
