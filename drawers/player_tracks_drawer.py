@@ -28,10 +28,11 @@ class PlayerTracksDrawer:
             # Draw the player tracks on the frame
 
             for track_id, player in player_dict.items():
-
+                
                 frame = draw_ellipse( frame, player['box'], color = (0,0,255), track_id=track_id)
 
             output_frames.append(frame)
 
 
         return output_frames
+    

@@ -1,8 +1,36 @@
 import cv2
 import sys
 sys.path.append("../")  
+import numpy as np
 
 from utils import get_centre_of_bbox, get_bbox_width
+
+def draw_triangle(frame, bbox, color):
+    """
+    Draws a triangle on the frame based on the bounding box coordinates.
+
+    Args:
+        frame (numpy.ndarray): The video frame to draw on.
+        bbox (list): The bounding box coordinates [x1, y1, x2, y2].
+        color (tuple): The color of the triangle in BGR format.
+
+    Returns:
+        numpy.ndarray: The frame with the drawn triangle.
+    """
+    y = int(bbox[1])
+    x, _ = get_centre_of_bbox(bbox)
+    
+    traingle_points = np.array([
+        [int(x), int(y)],
+        [int(x- 10), int(y - 20)],
+        [int(x + 10), int(y - 20)],
+    ])
+    
+
+    cv2.drawContours(frame, [traingle_points], 0, color, cv2.FILLED)
+    cv2.drawContours(frame, [traingle_points], 0, (0, 0, 0), 2)
+    
+    return frame
 
 def draw_ellipse(frame, bbox, color, track_id=None):
     """
