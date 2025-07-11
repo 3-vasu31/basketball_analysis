@@ -20,9 +20,11 @@ def main():
                                                       read_from_stub=True,
                                                       stub_path= "stubs/player_track_stub.pkl")
 
-    ball_tracker = ball_tracker.get_object_tracks(video_frames,
+    ball_tracks = ball_tracker.get_object_tracks(video_frames,
                                                   read_from_stub = True,
                                                   stub_path= "stubs/ball_track_stub.pkl")
+    # Remove wrong detections
+    ball_tracks = ball_tracker.remove_wrong_detections(ball_tracks)
 
     # Drqw output
     # Initialize the player drawer
@@ -33,7 +35,7 @@ def main():
     # Draw the player tracks on the video frames
     output_video_frames = player_tracks_drawer.draw(video_frames, player_tracker)
     # Draw the ball tracks on the video frames
-    output_video_frames = ball_tracks_drawer.draw(output_video_frames, ball_tracker)
+    output_video_frames = ball_tracks_drawer.draw(output_video_frames, ball_tracks)
 
     #save the video
     save_video(output_video_frames, "output_videos/output_video.avi")
