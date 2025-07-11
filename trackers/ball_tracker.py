@@ -2,6 +2,7 @@ from ultralytics import YOLO
 import sys
 import supervision as sv
 import numpy as np
+import pandas as pd
 sys.path.append("..")  
 from utils import read_stub, save_stub
 class BallTracker:
@@ -89,5 +90,24 @@ class BallTracker:
                 ball_positions[i] = {} # if the distance is too large, we remove the detection
             else:
                 last_good_from_index = i
+
+        return ball_positions
+
+    def interpolate_ball_positions(self, ball_positions):
+        """
+        Interpolates missing ball positions in the tracking data.
+        Args:
+            ball_positions (list): List of dictionaries containing ball tracking information for each frame.
+        Returns:
+            list: List of dictionaries with interpolated ball positions.
+        """
+        ball_positions = [ x.get(1,{}).get('bbox', []) for x in ball_positions]
+        df_ballpositions = pd.DataFrame(ball_positions, columns=['x1', 'y1', 'x2', 'y2'])
+
+        #Interpolate missing values
+        df_ball_positions = df_ballpositions.interpolate()
+        df_ball_positions = df_ball_positions.bfill()
+
+        ball_positions = [ {1: {'bbox': x}} for x in df_ball_positions.to_numpy().tolist()]
 
         return ball_positions
