@@ -1,7 +1,7 @@
 from utils import read_video, save_video
 from trackers import PlayerTracker, BallTracker
 from drawers import PlayerTracksDrawer, BallTracksDrawer
-
+from team_assigner import TeamAssigner
 
 
 def main():
@@ -29,7 +29,14 @@ def main():
     #interpolate missing ball positions
     ball_tracks = ball_tracker.interpolate_ball_positions(ball_tracks)
 
+    #Assign Player Teams
+    team_assigner = TeamAssigner()
+    player_teams = team_assigner.get_player_teams_accross_frames(video_frames,
+                                                                 player_tracker,
+                                                                 read_from_stub= True,
+                                                                 stub_path="stubs/player_assignment_stub.pkl")
     
+    print(player_teams)
     # Drqw output
     # Initialize the player drawer
     player_tracks_drawer= PlayerTracksDrawer()
