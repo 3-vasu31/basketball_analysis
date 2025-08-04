@@ -1,10 +1,15 @@
+
+from utils import read_video, save_video
+from drawers import PlayerTracksDrawer, BallTracksDrawer
+from team_assigner import TeamAssigner
+
 from ultralytics import YOLO
 import sys
 import supervision as sv
 import numpy as np
 import pandas as pd
-sys.path.append("..")  
 from utils import read_stub, save_stub
+
 class BallTracker:
     '''BallTracker class for tracking the ball in video frames using YOLO model.'''
     def __init__(self, model_path):
@@ -34,6 +39,7 @@ class BallTracker:
             cls_names_inv = {v:k for k,v in cls_names.items()}
 
             detection_supervision = sv.Detections.from_ultralytics(detection)
+            print(f"Supervision Detections: {detection_supervision}")
             tracks.append({})
             choosen_bbox = None
             max_confidence = 0
@@ -112,3 +118,12 @@ class BallTracker:
         ball_positions = [ {1: {'bbox': x}} for x in df_ball_positions.to_numpy().tolist()]
 
         return ball_positions
+
+
+
+video_frames= read_video(r"input_videos/video_1.mp4")
+
+    # Initialze the player tracker
+ball_tracker = BallTracker(r"models/ball_detector_model.pt")
+ball_tracker = ball_tracker.get_object_tracks(video_frames)
+ball_tracker = ball_tracker.get_object_tracks( frames = ball_tracker, read_from_stub = False, stub_path = None)

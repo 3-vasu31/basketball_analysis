@@ -2,6 +2,7 @@ models
 output_videos
 stubs
 yolov8l.pt
+basketball
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]

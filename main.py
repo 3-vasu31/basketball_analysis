@@ -31,12 +31,12 @@ def main():
 
     #Assign Player Teams
     team_assigner = TeamAssigner()
-    player_teams = team_assigner.get_player_teams_accross_frames(video_frames,
+    player_assignment = team_assigner.get_player_teams_accross_frames(video_frames,
                                                                  player_tracker,
                                                                  read_from_stub= True,
                                                                  stub_path="stubs/player_assignment_stub.pkl")
     
-    print(player_teams)
+    
     # Drqw output
     # Initialize the player drawer
     player_tracks_drawer= PlayerTracksDrawer()
@@ -44,7 +44,9 @@ def main():
     ball_tracks_drawer = BallTracksDrawer()
 
     # Draw the player tracks on the video frames
-    output_video_frames = player_tracks_drawer.draw(video_frames, player_tracker)
+    output_video_frames = player_tracks_drawer.draw(video_frames,
+                                                    player_tracker, 
+                                                    player_assignment)
     # Draw the ball tracks on the video frames
     output_video_frames = ball_tracks_drawer.draw(output_video_frames, ball_tracks)
 
