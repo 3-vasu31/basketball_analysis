@@ -1,0 +1,6 @@
+1) For ball acquisition what we are doing is that we are setting a threshold of let's say 50% or 60%, if the player bounding box and the ball bbox overlapp more than this threshold we consider that
+    that player has the ball.
+2) If we have no bounding box overlapp, than we consider that the player bbox having the closed proximity to the bbox of ball will acquire the ball.
+3) Last but not the least, since we are dealing the images into 2d plane and the game is in 3d if a ball is tossed and if two players are below it, there will be 100% match of the above 2 condition
+    therefore we will introduce another parameter to calculate the ball acquisition, we will decide if for more than let's say 15 frames, if the person and bbox follow the above two conditions then we can 
+    consider that the ball is with that player.
