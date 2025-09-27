@@ -2,7 +2,7 @@ from utils import read_video, save_video
 from trackers import PlayerTracker, BallTracker
 from drawers import PlayerTracksDrawer, BallTracksDrawer
 from team_assigner import TeamAssigner
-
+from ball_acquisition_detector import BallAquisitionDetector
 
 def main():
 
@@ -23,8 +23,10 @@ def main():
     ball_tracks = ball_tracker.get_object_tracks(video_frames,
                                                   read_from_stub = True,
                                                   stub_path= "stubs/ball_track_stub.pkl")
+    # print(player_tracker)
     # Remove wrong detections
     ball_tracks = ball_tracker.remove_wrong_detections(ball_tracks)
+    
 
     #interpolate missing ball positions
     ball_tracks = ball_tracker.interpolate_ball_positions(ball_tracks)
@@ -35,6 +37,13 @@ def main():
                                                                  player_tracker,
                                                                  read_from_stub= True,
                                                                  stub_path="stubs/player_assignment_stub.pkl")
+    
+    
+    # Ball Acquisition Detection
+    ball_acquisition_detector = BallAquisitionDetector()
+    ball_acquisition = ball_acquisition_detector.detect_ball_possession(player_tracker,ball_tracks)
+    
+    print(ball_acquisition)
     
     
     # Drqw output
