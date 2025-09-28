@@ -24,9 +24,9 @@ class BallAquisitionDetector:
             containment_threshold (float): Containment ratio above which a player
                 is considered to hold the ball without requiring distance checking.
         """
-        self.possession_threshold = 45
-        self.min_frames = 10
-        self.containment_threshold = 0.75
+        self.possession_threshold = 50
+        self.min_frames = 8
+        self.containment_threshold = 0.8
         
     def get_key_basketball_player_assignment_points(self, player_bbox,ball_center):
         """
